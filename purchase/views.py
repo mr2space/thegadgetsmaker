@@ -144,16 +144,19 @@ def upiPayment(request, courseId):
     details = {"method": "upi", "upi": True, "course": course.title, "username":request.user}
     sendEmail(request, details=details)
     sendEmail(request, details=details, email=request.user.email, temp="email/payment_info_user.html")
+    #TODO:upi waiting page
     return HttpResponse("wait for the verification")
 
 
 @login_required(login_url="/auth/")
 def payment_success(request):
+    #TODO: paymenr success page
     return HttpResponse("payment success")
 
 
 @login_required(login_url="/auth/")
 def payment_failed(request):
+    #TODO: payment failed page
     return HttpResponse("payment failed")
 
 
@@ -170,6 +173,8 @@ def updateThePayment(session):
         payment.payment_completed=True
         payment.save()
         sendEmail(request,)
+        #TODO : SEND EMAIL FIX
+        #TODO: COURSE PURCHASE PAGE
         return HttpResponse("course purchased")
     except Exception as error:
         print("bad value happen", post_payment_id,error)

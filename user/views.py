@@ -8,6 +8,7 @@ from .authFiles.log import *
 # Create your views here.
 
 def index(request):
+    #TODO: AUTH PAGE
     return render(request, "user/index.html")
 
 
@@ -24,6 +25,7 @@ def test(request):
     return HttpResponse("welcome")
 
 def logout(request):
+    #TODO:LOGOUT PAGE
     if not request.user:
         return HttpResponse("user not logged")
     logoutUser(request)
@@ -41,6 +43,7 @@ def registeration(request):
 
 @login_required(login_url="/auth/")
 def otp(request):
+    #TODO: OTP
     if request.method != "POST":
         return render(request, "user/otp_verification.html")
     try:
@@ -68,6 +71,7 @@ def otp(request):
 
 @login_required(login_url="/auth/")
 def resendOtp(request):
+    #TODO : RESEND BUTTON
     # TODO: add this to url
     if request.method != 'POST':
         print('not post method')
