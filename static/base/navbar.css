@@ -1,0 +1,368 @@
+:root {
+    --backgroud: #12151D;
+    --red: #FF0075;
+    --yellow: #FFDE00;
+    --white: #FFFFFF;
+    --green: #2BC7A0;
+    --card-background: #24272ee7;
+
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    text-decoration: none;
+}
+
+
+body {
+    background-color: var(--backgroud);
+    width: 100%;
+    height: 100vh;
+}
+
+#navbar {
+    padding: 0px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 8vh;
+    background: transparent;
+    color: white;
+    position: sticky;
+}
+
+.logo-text {
+    font-weight: 700;
+}
+
+.nav-links {
+    display: flex;
+    gap: 40px;
+    color: white;
+}
+
+.link a {
+    color: white;
+}
+
+.link {
+    position: relative;
+}
+
+.link::after {
+    content: ' ';
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    width: 0%;
+    height: 4px;
+    border-radius: 2px;
+    background-color: var(--yellow);
+    transition: 0.3s ease-in-out;
+}
+
+.link:hover::after,
+.link.active::after {
+    width: 100%;
+}
+
+
+.search-box {
+    height: 32px;
+    width: 380px;
+    position: relative;
+    border-radius: 30px;
+    border: 1px solid white;
+    overflow: hidden;
+}
+
+.search-logo {
+    margin-left: 12px;
+    display: inline;
+    margin-top: 5px;
+}
+
+.search-input {
+    width: 90%;
+    height: 100%;
+    background: transparent;
+    z-index: 1;
+    border: 0;
+    display: inline;
+    outline: 0;
+}
+
+.search-input {
+    padding-left: 10px;
+    color: white;
+}
+
+.search-input::placeholder {
+    color: white;
+}
+
+.profile {
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid var(--red);
+}
+
+.profile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.profile-wrapper{
+    display: flex;
+    gap:20px;
+}
+.nametag{
+    padding:0 10px;
+    height: 32px;
+    cursor: pointer;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: var(--card-background);
+        position: relative;
+        transition: 0.3s all ease-in-out;
+        color: white;
+}
+.login-btn a,.mob-login-btn a{
+    width: 120px;
+    height: 32px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--card-background);
+    position: relative;
+    transition: 0.3s all ease-in-out;
+    color:white;
+}
+
+.login-btn{
+    position: relative;
+    overflow: hidden;
+}
+
+.login-btn:hover a, .mob-login-btn:hover a{
+    background: var(--red);
+}
+
+#sidebar {
+    display: none;
+}
+
+.menu {
+    display: none;
+}
+
+
+
+.menu {
+    width: 25px;
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    justify-content: space-between;
+    align-items: flex-end;
+    cursor: pointer;
+}
+
+.menu .line {
+    width: 100%;
+    height: 2px;
+    background-color: var(--yellow);
+    transition: 0.3s ease-in-out;
+}
+
+.menu .line:nth-child(1) {
+    width: 100%;
+}
+
+.menu .line:nth-child(2) {
+    width: 60%;
+}
+
+.menu .line:nth-child(3) {
+    width: 40%;
+}
+
+.menu:hover .line {
+    width: 100% !important;
+}
+
+#sidebar {
+    position: fixed;
+    display: none;
+    left: 110%;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: var(--backgroud);
+    padding: 0 30px;
+    transition: 0.3s all ease-in-out;
+    overflow: hidden;
+}
+
+#sidebar.active {
+    display: flex;
+    left: 0 !important;
+}
+
+.mob-profile {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 40px;
+    height: 40px;
+    z-index: 101;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--red);
+}
+
+.mob-profile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mob-login-btn{
+    position: absolute;
+        top: 5%;
+        left: 5%;
+}
+
+#close-sidebar {
+    position: absolute;
+    right: 7%;
+    top: 5%;
+    font-size: 30px;
+    font-weight: 100;
+    color: white;
+    cursor: pointer;
+}
+
+.mob-nav-links {
+    width: 100%;
+    max-width: 500px;
+}
+
+.mob-link {
+    cursor: pointer;
+    border-radius: 10px;
+    margin-top: 20px;
+
+    /* border: 1px solid red; */
+    font-size: 30px;
+
+    color: white;
+    transition: 0.3s all ease-in-out;
+}
+
+.mob-link a {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 70px;
+    width: 100%;
+    text-align: center;
+    color: white;
+    transition: 0.3s all ease-in-out;
+}
+
+.mob-link:nth-child(even):hover {
+    background-color: var(--red);
+}
+
+.mob-link:nth-child(odd):hover {
+    background-color: var(--yellow);
+    color: black;
+}
+
+.mob-link:nth-child(odd):hover a {
+    color: black;
+}
+
+.mob-link:nth-child(odd).active {
+    background: var(--yellow);
+    color: black;
+}
+
+.mob-link:nth-child(odd).active a {
+    color: black;
+}
+
+.mob-link:nth-child(even).active {
+    background: var(--red);
+}
+
+
+.navbar-background .circle {
+    position: absolute;
+    right: -4%;
+    top: -2%;
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background-color: var(--green);
+    filter: blur(100px);
+}
+
+.navbar-background .circle-bottom {
+    position: absolute;
+    left: -18%;
+    top: 72%;
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background-color: var(--green);
+    filter: blur(100px);
+}
+
+
+
+@media screen and (max-width: 1050px) {
+    .search-box {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 680px) {
+    #navbar {
+        padding: 0px 20px;
+    }
+
+    .logo-text {
+        font-size: 14px;
+    }
+
+    .search-box {
+        display: none;
+    }
+
+    .nav-links,
+    .profile ,
+    .login-btn{
+        display: none;
+    }
+
+    .menu {
+        display: flex;
+    }
+
+}

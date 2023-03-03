@@ -1,0 +1,25 @@
+{% extends 'base.html'%}
+
+{% block title %}
+   {{course.title}}
+{% endblock %}
+
+{% block root %}
+<img src="{{img_url}}{{course.title_img}}" style="width:200px;height:auto;object-fit:cover;" alt="no img "/>
+{{course.title}} <br />
+{{course.short_des}} <br/>
+{{course.description}} <br/>
+{{course.course_time}} <br/>
+{{course.price}}<br/>
+
+{% if show_payment_link %}
+<a href="/payment/{{course.id}}">purchase</a>
+<a href="/payment/upi/{{course.id}}">purchase via upi </a>
+{% endif %}
+
+{% if not show_payment_link and meet %}
+    meet_link : <a href="{{ meet }}">Join Meeting </a>
+{% endif %}
+
+{% endblock %}
+

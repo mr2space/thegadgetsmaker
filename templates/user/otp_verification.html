@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Verify Otp</title>
+</head>
+<body>
+<form action="/auth/otp/" method="post">
+    {% csrf_token %}
+  <input type="text" name="otp" id="otp">
+  <button type="submit">verify</button>
+</form>
+</body>
+</html>
