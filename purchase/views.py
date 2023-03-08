@@ -4,10 +4,11 @@ from django.shortcuts import render, redirect
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.views.decorators.csrf import csrf_exempt
-
 from courses.models import Course
 from django.contrib.auth.models import User
-from .models import PaymentInfo,FailedPayment
+
+from home.templatetags import url
+from .models import PaymentInfo, FailedPayment
 from django.conf import settings
 import stripe
 
@@ -18,13 +19,13 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 ADMIN_EMAIL = "princegoswami.space@gmail.com"
 
 
-def sendEmail(request,details:dict, email="princegoswami.space@gmail.com", temp="email/payment_info_admin.html" ):
+def sendEmail(user,details:dict, email="princegoswami.space@gmail.com", temp="email/payment_info_admin.html" ):
     #TODO: set setting.admin_email
     #TODO: chnage email subject
     html = get_template(temp)
-    param = {'username': request.user, 'payment_method':details["method"], "upi":details["upi"], "course":details["course"]}
+    param = {'username': user, 'payment_method':details["method"], "upi":details["upi"], "course":details["course"]}
     html_content = html.render(param)
-    subject = f"New Payment for {details['course']}" if email == "princegoswami.space@gmail.com" else f"Thanks for your Purchase"
+    subject = f"New Payment for {details['course']}" if email == ADMIN_EMAIL else f"Thanks for your Purchase"
     from_email = settings.EMAIL_HOST_USER
     to = email
     try:
@@ -77,7 +78,7 @@ def index(request, courseId):
             details["method"] = "upi"
             details["upi"] = True
             details["course"] = course.title
-            sendEmail(request, details=details)
+            sendEmail(request.user, details=details)
             return HttpResponse("wait for the verification")
         is_purchased.save()
 
@@ -109,10 +110,12 @@ def index(request, courseId):
 
 @login_required(login_url="/auth/")
 def upiPayment(request, courseId):
+    param = url.setPara(request, "")
+    param["courseId"] = courseId
     if request.method != "POST":
-        return render(request, "purchase/upi.html",{'courseId':courseId})
+        return render(request, "purchase/upi.html", param)
     if not request.FILES['upi_img']:
-        return render(request, "purchase/upi.html", {'courseId':courseId})
+        return render(request, "purchase/upi.html",param)
     try:
         user = User.objects.get(id=request.user.id)
         course = Course.objects.get(id=courseId)
@@ -142,20 +145,22 @@ def upiPayment(request, courseId):
         is_purchased.upi_img = request.FILES['upi_img']
         is_purchased.save()
     details = {"method": "upi", "upi": True, "course": course.title, "username":request.user}
-    sendEmail(request, details=details)
-    sendEmail(request, details=details, email=request.user.email, temp="email/payment_info_user.html")
+    sendEmail(request.user, details=details)
+    sendEmail(request.user, details=details, email=request.user.email, temp="email/payment_info_user.html")
     #TODO:upi waiting page
     return HttpResponse("wait for the verification")
 
 
 @login_required(login_url="/auth/")
 def payment_success(request):
+    param = url.setPara(request, "")
     #TODO: paymenr success page
     return HttpResponse("payment success")
 
 
 @login_required(login_url="/auth/")
 def payment_failed(request):
+    param = url.setPara(request, "")
     #TODO: payment failed page
     return HttpResponse("payment failed")
 
@@ -165,17 +170,24 @@ def updateThePayment(session):
     course_id = session["metadata"]["course_id"]
     user_id = session["metadata"]["user_id"]
     post_payment_id = session["payment_intent"]
-
+    try:
+        user = User.objects.get(id=user_id)
+        course = Course.objects.get(id=course_id)
+    except Exception as error:
+        return 0
     try:
         print("in try")
         payment = PaymentInfo.objects.get(id=purchase_id)
         payment.payment_id=post_payment_id
         payment.payment_completed=True
         payment.save()
-        sendEmail(request,)
-        #TODO : SEND EMAIL FIX
+        details = {"method": "upi", "upi": True, "course": course.title, "username": user.username}
+        sendEmail({"user":user.username}, details=details)
+        print(user.email)
+        sendEmail({"user":user.username}, details=details, email=user.email, temp="email/payment_info_user_online.html")
+        #TODO : SEND EMAIL page  FIX
         #TODO: COURSE PURCHASE PAGE
-        return HttpResponse("course purchased")
+        return 1
     except Exception as error:
         print("bad value happen", post_payment_id,error)
         print("go to stripe for payment refund")
@@ -185,7 +197,7 @@ def updateThePayment(session):
             payment_id=post_payment_id,
         )
         failp.save()
-        return HttpResponse("payment failed")
+        return 0
 
 
 @csrf_exempt
@@ -208,7 +220,8 @@ def stripeWebhook(request):
     # Handle the checkout.session.completed event
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
-        updateThePayment(session)
+        if updateThePayment(session):
+            return HttpResponse(status=200)
 
-    return HttpResponse(status=200)
+    return  HttpResponse(status=500)
 

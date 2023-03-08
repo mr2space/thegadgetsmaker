@@ -1,21 +1,52 @@
 {% extends 'base.html'%}
-
+{% load static %}
 {% block title %}
    {{course.title}}
 {% endblock %}
-
+{%block css %}
+<link rel="stylesheet" href="{% static 'courses/course.css' %}">
+{% endblock %}
 {% block root %}
-<img src="{{img_url}}{{course.title_img}}" style="width:200px;height:auto;object-fit:cover;" alt="no img "/>
-{{course.title}} <br />
-{{course.short_des}} <br/>
-{{course.description}} <br/>
-{{course.course_time}} <br/>
-{{course.price}}<br/>
+<section id="course">
+        <div class="course-box">
+            <div class="title-img">
+                <img src="{{img_url}}{{course.title_img}}" alt="{{course.title}}">
+            </div>
+            <div class="title">
+                {{course.title}}
+            </div>
 
-{% if show_payment_link %}
-<a href="/payment/{{course.id}}">purchase</a>
-<a href="/payment/upi/{{course.id}}">purchase via upi </a>
+            <div class="price-box">
+              {{course.price}}Rs
+            </div>
+            <div class="payment">
+                {% if show_payment_link %}
+<a href="/payment/{{course.id}}" id="pay_online">purchase</a>
+<a href="/payment/upi/{{course.id}}" id="pay_upi">purchase via upi </a>
 {% endif %}
+<!--                <button id="pay_online">Purchase Online</button>-->
+<!--                <button id="pay_upi">Purchase UPI</button>-->
+            </div>
+        </div>
+        <div class="heading">
+            <div class="title">
+                Web Dev
+            </div>
+            <div class="short-desc">
+               {{course.short_des}}
+            </div>
+            <div class="time">
+
+                <p>Course Timing : {{course.course_time}}</p>
+            </div>
+        </div>
+        <div class="details">
+            {{course.description|safe }}
+        </div>
+    </section>
+
+
+
 
 {% if not show_payment_link and meet %}
     meet_link : <a href="{{ meet }}">Join Meeting </a>

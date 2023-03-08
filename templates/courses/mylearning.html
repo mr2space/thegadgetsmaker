@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for c in courses %}
+
+  {{c.course.title}}
+  {{c.course.short_des}}
+    {{c.course.course_time}}
+{% endfor %}
+
+
+</body>
+</html>

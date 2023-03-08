@@ -11,15 +11,15 @@ from purchase.models import PaymentInfo
 
 
 def index(request):
-    param = {}
+    param = url.setPara(request, "Courses")
+    # print("user",param)
     try:
         courses = Course.objects.all().values()
         param['courses']=courses
-        param['img_url']="/media/"
-        print(courses[0])
+        # param['img_url']="/media/"
+        # print(courses[0])
     except Exception as error:
         print("value not able to fetch", error)
-    param["urls"] = url.returnActiveUrl(active_url="Courses")
     return render(request, "courses/index.html", param)
 
 
@@ -33,7 +33,7 @@ def isTeacher(user):
 @login_required(login_url="/auth/")
 @user_passes_test(isTeacher, login_url="/auth/")
 def new(request):
-    param = {}
+    param = url.setPara(request, "")
     #TODO:URL ACTIVE
     if request.method != 'POST':
         param['form'] = CourseForm()
@@ -47,7 +47,7 @@ def new(request):
 
 
 def coursePage(request, id):
-    param = {}
+    param = url.setPara(request, "Courses")
     try:
         course = Course.objects.get(id=id)
         param["course"] = course
@@ -66,3 +66,13 @@ def coursePage(request, id):
         pass
     param["urls"] = url.returnActiveUrl(active_url="Courses")
     return render(request, "courses/course.html", param)
+
+
+@login_required(login_url="/auth/")
+def myLearning(request):
+    param = url.setPara(request,page_name="My Learning")
+    user = User.objects.get(username = request.user)
+    p = PaymentInfo.objects.all().filter(user=user)
+    param["courses"] = p
+
+    return render(request, "courses/mylearning.html",param)

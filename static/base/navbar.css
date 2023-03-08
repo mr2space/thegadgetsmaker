@@ -1,6 +1,7 @@
 :root {
     --backgroud: #12151D;
     --red: #FF0075;
+        --red-lite:#ff00771f;
     --yellow: #FFDE00;
     --white: #FFFFFF;
     --green: #2BC7A0;
@@ -20,8 +21,6 @@
 
 body {
     background-color: var(--backgroud);
-    width: 100%;
-    height: 100vh;
 }
 
 #navbar {
@@ -30,12 +29,15 @@ body {
     justify-content: space-between;
     align-items: center;
     height: 8vh;
-    background: transparent;
+    background: var(--background);
     color: white;
     position: sticky;
+    z-index:100;
+    top:0;
 }
 
-.logo-text {
+.logo-text a{
+    color:white;
     font-weight: 700;
 }
 
@@ -123,6 +125,8 @@ body {
     gap:20px;
 }
 .nametag{
+    outline: none;
+    border: 0;
     padding:0 10px;
     height: 32px;
     cursor: pointer;
@@ -135,6 +139,31 @@ body {
         transition: 0.3s all ease-in-out;
         color: white;
 }
+.nametag .logout-btn {
+    display: none;
+    /* margin-top:20px; */
+
+}
+
+.nametag .logout-btn a{
+    color:white;
+    text-decoration: none;
+}
+.nametag:focus-within .logout-btn {
+    display: flex;
+    height: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: var(--red);
+        padding: 0 10px;
+        transform: translateY(35px);
+        cursor: pointer;
+        border-radius: 5px;
+    position: absolute;
+}
+
+
 .login-btn a,.mob-login-btn a{
     width: 120px;
     height: 32px;
@@ -335,6 +364,51 @@ body {
 }
 
 
+#msg-box{
+    position: fixed;
+    top:8vh;
+    height: 32px;
+    margin:0 50px;
+    width: calc(100% - 100px);
+    padding: 8px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border:1px solid var(--red);
+    background:  var(--red-lite)   ;
+    color:white;
+    z-index:10;
+}
+
+#msg-box p{
+    overflow: hidden;
+        white-space: nowrap;
+            text-overflow: ellipsis;
+}
+
+#msg-box .close-btn{
+    cursor: pointer;
+    z-index:1;
+}
+#msg-box.deactive{
+    animation-name: msg-close;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes msg-close {
+    0%{
+        top:8vh;
+        display: flex;
+    }
+    100%{
+        top:-12vh;
+        display:none;
+    }
+}
+
 
 @media screen and (max-width: 1050px) {
     .search-box {
@@ -357,12 +431,19 @@ body {
 
     .nav-links,
     .profile ,
-    .login-btn{
+    .login-btn,
+    .nametag{
         display: none;
     }
+
 
     .menu {
         display: flex;
     }
 
+        #msg-box {
+            margin:0;
+            width: 100%;
+            font-size: 12px;
+        }
 }

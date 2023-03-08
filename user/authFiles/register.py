@@ -17,13 +17,13 @@ def otpGenerator() -> int:
     return int(otp)
 
 
-def sendEmail(otp: int, request):
+def sendEmail(otp: int, username,user_email = None):
     html = get_template("email/otp.html")
-    param = {'username': request.POST.get('username'), 'otp': otp}
+    param = {'username': username, 'otp': otp}
     html_content = html.render(param)
-    subject = f"Welcome {request.POST.get('username')} to our gadgets maker "
+    subject = f"Welcome {username} to our gadgets maker "
     from_email = settings.EMAIL_HOST_USER
-    to = request.POST.get('email')
+    to = user_email
     try:
         msg = EmailMultiAlternatives(subject, html_content, from_email, [to])
         msg.attach_alternative(html_content, "text/html")
@@ -50,20 +50,23 @@ def savingUserModel(request):
         print("some error occur in saving the user")
         print(error)
         return -1
-    sendEmail(otp, request)
+    sendEmail(otp, username=request.user.username, email=request.user.email)
     try:
+        print("here")
         new_extenduser = ExtendUser(
             username=User.objects.get(username=request.POST.get('username')),
-            profile=request.FILES["profile"],
             phone_number=request.POST.get("phone_number"),
             full_name=request.POST.get('fullname'),
             address=request.POST.get('address'),
             is_verified=False,
             otp=otp,
         )
+        if request.FILES.get("profile", False):
+            print("its done")
+            new_extenduser.profile = request.FILES["profile"]
         new_extenduser.save()
     except Exception as error:
-        print("some error occur in savinng extend user")
-        print(error.args, request.FILES)
+        print("some error occur in saving extend user")
+        print(error, request.FILES)
         return -1
     return 0

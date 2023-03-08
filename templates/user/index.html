@@ -1,34 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-<body>
-<style>
-			@import url('https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900');
-		</style>
+{% extends 'base.html'%}
+{% load static %}
 
-{{user.username}}
-<form action="login/" method="post" >
-    {% csrf_token %}
-    <input type="text" placeholder="username" name="username" >
-    <input type="password" placeholder="password" name="password">
-    <input type="submit">
-</form>
-
-<form action="register/" method="post"  enctype="multipart/form-data" >
-     {% csrf_token %}
-    <input type="text" placeholder="username" name="username" >
-    <input type="text" placeholder="email" name="email">
-    <input type="text" placeholder="fullname" name="fullname">
-    <input type="text" placeholder="phone_number" name="phone_number">
-    <input type="password" name="password" placeholder="password">
-    <input type="text" placeholder="address" name="address">
-    <input type="file" name="profile" accept="image/*">
-    <button type="submit">Submit</button>
-</form>
+{% block title %}
+   Sign Up
+{% endblock %}
 
 
-</body>
-</html>
+{% block css %}
+    <link rel="stylesheet" href="{% static 'user/auth.css' %}">
+{% endblock %}
+
+
+{% block root %}
+<div class="curton" id="curton">
+        <div class="title">TheGadgetsMaker</div>
+    </div>
+    <div class="form-container">
+        <div class="form-box" id="login-form">
+            <form action="login/" name="login_form" method="post">
+                <h3>Sign In</h3>
+                 {% csrf_token %}
+                <input type="text" placeholder="username" name="username" required>
+                <input type="password" placeholder="password" name="password" required  >
+                <button type="submit" >submit</button>
+            </form>
+            <div id="open_register">Register ?</div>
+        </div>
+
+        <div class="form-box active form-row" id="register-form">
+            <form action="register/"  name="register" method="post" enctype="multipart/form-data">
+                <h3>Sign Up</h3>
+                 {% csrf_token %}
+
+                <div class="row">
+                    <div class="col">
+                        <input type="text" placeholder="fullname" name="fullname" required>
+                        <input type="text" placeholder="username" name="username" required>
+                        <input type="password" name="password" placeholder="password" required>
+                        <input type="text" placeholder="address" name="address" required>
+
+                    </div>
+
+                    <div class="col">
+                        <input type="text" placeholder="email" name="email" required>
+                        <input type="text" placeholder="phone_number" name="phone_number" required>
+                        <input type="password" name="confirm_password" placeholder="confirm password" required>
+                        <div class="upload">
+                            <input type="file" id="file-input" name="profile" accept="image/*" >
+                            <label for="file-input">
+                                <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                                &nbsp; Choose Files To Upload
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <button id="register-btn">Register</button>
+            </form>
+            <div id="open-login">Login ?</div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+{% block script %}
+
+    <script src="{% static 'user/anime.min.js' %}"></script>
+    <script src="{% static 'user/main.js' %}"></script>
+
+{% endblock %}

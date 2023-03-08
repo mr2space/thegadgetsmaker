@@ -5,15 +5,21 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Home{% endblock %}</title>
+        {% block css %}{% endblock %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{% static 'base/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'base/background.css' %}">
 
-    {% block css %}{% endblock %}
+
 </head>
 <body>
+    <div class="background">
+        <div class="circle-1"></div>
+        <div class="circle-2"></div>
+    </div>
         <nav id="navbar">
         <div class="logo-text">
-            THEGADGETSMAKER
+            <a href="/"> THEGADGETSMAKER</a>
         </div>
         <div class="nav-links">
 
@@ -34,7 +40,7 @@
             {% if user.is_authenticated  %}
                     <div class="profile-wrapper">
 
-            <div class="nametag">Hi, {{user.username}}</div>
+            <button class="nametag">Hi, {{user.username}} <div class="logout-btn"> <a href="/auth/logout">Logout</a></div></button>
         <div class="profile">
             <img src="{{ user_info.profile.url }}" alt="profile">
         </div>
@@ -76,6 +82,12 @@
             {% endfor %}
         </div>
     </section>
+    {% if page_msg %}
+    <section id="msg-box">
+        <p>{{ page_msg }}</p>
+        <div class="close-btn">X</div>
+    </section>
+    {% endif %}
 {% block root %}{% endblock %}
 
     <script src="{% static 'base/navbar.js' %}"></script>

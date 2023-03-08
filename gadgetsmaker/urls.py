@@ -24,6 +24,7 @@ urlpatterns = [
     path('auth/', include('user.urls')),
     path('courses/', include('courses.urls')),
     path('payment/', include('purchase.urls')),
+    path('tinymce/', include('tinymce.urls')),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

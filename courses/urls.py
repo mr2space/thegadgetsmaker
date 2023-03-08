@@ -4,4 +4,5 @@ urlpatterns = [
     path('', views.index, name="courses"),
     path('new/', views.new, name="add course"),
     path('course/<int:id>', views.coursePage, name="course page"),
+    path('my_learning', views.myLearning, name="my learning"),
 ]
