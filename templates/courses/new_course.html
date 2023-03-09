@@ -10,11 +10,11 @@
 {% endblock %}
 
 {% block root %}
-<div class="bg-dark d-flex flex-column justify-content-center align-items-center text-light">
+<div class="">
 
 {% load crispy_forms_tags %}
 
-<form action="/courses/new/" method="post" class="mx-5 my-5 " style="width:600px" enctype="multipart/form-data">
+<form action="/courses/new/" method="post" class="mx-5 my-5 " style="width:1000px;color:white;" enctype="multipart/form-data">
     {% csrf_token %}
     {{form.media}}
     {{ form|crispy }}

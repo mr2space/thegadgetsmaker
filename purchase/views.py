@@ -148,7 +148,7 @@ def upiPayment(request, courseId):
     sendEmail(request.user, details=details)
     sendEmail(request.user, details=details, email=request.user.email, temp="email/payment_info_user.html")
     #TODO:upi waiting page
-    return HttpResponse("wait for the verification")
+    return render(request, "purchase/upi_wait.html", param)
 
 
 @login_required(login_url="/auth/")

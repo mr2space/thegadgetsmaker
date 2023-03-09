@@ -44,7 +44,10 @@ INSTALLED_APPS = [
     'courses.apps.CoursesConfig',
     'purchase.apps.PurchaseConfig',
     'home.apps.HomeConfig',
+    'ckeditor',
+    'ckeditor_uploader',
     'tinymce',
+    'blog.apps.BlogConfig',
 
 ]
 
@@ -150,6 +153,15 @@ STATICFILES_DIRS = [
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 #media URLS
+
+CKEDITOR_UPLOAD_PATH = 'blog/img/'
+CKEDITOR_CONFIGS = {
+    'default': {
+        'height': 'full',
+        'width': 'full',
+    },
+}
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')

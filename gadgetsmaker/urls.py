@@ -24,7 +24,9 @@ urlpatterns = [
     path('auth/', include('user.urls')),
     path('courses/', include('courses.urls')),
     path('payment/', include('purchase.urls')),
+    path('blogs/',include('blog.urls')),
     path('tinymce/', include('tinymce.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

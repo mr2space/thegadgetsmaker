@@ -2,7 +2,7 @@ from user.models import ExtendUser
 
 DEFAULT_URLS = {
     "Home": {
-        "url": "",
+        "url": "/",
         "status": '',
     },
     "Courses": {
@@ -10,9 +10,13 @@ DEFAULT_URLS = {
         "status": '',
     },
     "My Learning": {
-        "url": "/learning",
+        "url": "/courses/my_learning",
         "status": '',
     },
+    "Blog":{
+        "url":"/blogs",
+        "status":'',
+    }
 }
 
 IMG_URL = "/media/"
@@ -32,6 +36,10 @@ def returnActiveUrl(urls={}, active_url="Home"):
         "url": "/courses/my_learning",
         "status": '',
     },
+    "Blog":{
+        "url":"/blogs",
+        "status":'',
+    }
     }
     url = urls.get(active_url,{"status":False})
     url['status'] = "active"

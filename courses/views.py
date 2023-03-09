@@ -74,5 +74,4 @@ def myLearning(request):
     user = User.objects.get(username = request.user)
     p = PaymentInfo.objects.all().filter(user=user)
     param["courses"] = p
-
     return render(request, "courses/mylearning.html",param)
