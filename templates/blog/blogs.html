@@ -1,0 +1,57 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title %}
+   Blogs
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'blog/blogs.css' %}">
+{% endblock %}
+
+
+{% block root %}
+<div class="heading">
+        <h2>Blogs</h2>
+    </div>
+    <div class="course-wrapper">
+        {% for c in blogs %}
+        <div class="course-line">
+            <div class="img-box">
+                <div class="img">
+                    <div class="red decorator">
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                    </div>
+                    <div class="yellow decorator">
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                    </div>
+                    <a href="/blogs/blog/{{c.id}}"><img src="{{c.title_img.url}}" alt=""></a>
+                </div>
+            </div>
+            <div class="course-info">
+                <div class="course-heading">
+                    <h2><a href="/blogs/blog/{{c.id}}">  {{c.title}}</a></h2>
+                </div>
+
+                <div class="short-info">
+                    <p>
+                        {{c.short_des}}
+                    </p>
+
+                    <div class="time">
+                            <span>   <a href="/blogs/blog/{{c.id}}">Read More</a>
+                            </span>
+                    </div>
+                </div>
+
+            </div>
+                </div>
+        {% endfor %}
+
+    </div>
+        {% endblock %}
+

@@ -1,0 +1,105 @@
+
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title %}
+   TheGadgetsMaker
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'home/style.css' %}">
+{% endblock %}
+
+
+{% block root %}
+
+    <section id="hero">
+        <div class="logo">
+            <img src="" alt="">
+        </div>
+        <div class="title">
+            <h1>The<span>G</span>adetsMaker</h1>
+            <p>Awesome text</p>
+        </div>
+        <div class="course-btn">
+            <a href="/">View Our Courses</a>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="section-heading">
+            <h2> <span>About</span> Author</h2>
+        </div>
+        <div class="row">
+            <div class="col">
+
+                <div class="box">
+                    <div class="name-decorator">
+                        <span>Hello I'm</span>
+                    </div>
+                    <div class="name">Gautam</div>
+                    <div class="job">Electronics</div>
+                    <div class="contact"><i class="bi bi-envelope-fill"></i>email</div>
+                    <div class="contact"><i class="bi bi-telephone-fill"></i>phone</div>
+                    <div class="contact"> <a href="/"><i class="bi bi-instagram"></i>insta</a> </div>
+                </div>
+
+
+            </div>
+            <div class="col">
+                <div class="back-green">
+
+                </div>
+                <div class="auth-img">
+                    <img src="c.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="blog">
+        <div class="section-heading">
+            <h2> <span>Blog</span></h2>
+        </div>
+
+            <div class="course-wrapper">
+        {% for c in blogs %}
+        <div class="course-line">
+            <div class="img-box">
+                <div class="img">
+                    <div class="red decorator">
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                    </div>
+                    <div class="yellow decorator">
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                        <div class="skew"></div>
+                    </div>
+                    <a href="/blogs/blog/{{c.id}}"><img src="{{c.title_img.url}}" alt=""></a>
+                </div>
+            </div>
+            <div class="course-info">
+                <div class="course-heading">
+                    <h2><a href="/blogs/blog/{{c.id}}">  {{c.title}}</a></h2>
+                </div>
+
+                <div class="short-info">
+                    <p>
+                        {{c.short_des}}
+                    </p>
+
+                    <div class="time">
+                            <span>   <a href="/blogs/blog/{{c.id}}">Read More</a>
+                            </span>
+                    </div>
+                </div>
+
+            </div>
+                </div>
+        {% endfor %}
+
+    </div>
+    </section>
+{% endblock %}
