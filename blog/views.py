@@ -17,9 +17,7 @@ def addArtical(request):
     # TODO:URL ACTIVE
     if request.method != 'POST':
         param['form'] = BlogForm()
-        print("here")
         return render(request, "blog/new_blog.html", param)
-    print(request.FILES)
     form = BlogForm(request.POST,request.FILES)
     if form.is_valid():
         form.save()
