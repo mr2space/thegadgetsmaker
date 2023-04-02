@@ -62,5 +62,4 @@ def setPara(request,page_name):
     param["user_info"] = extenduser
     param["img_url"] = IMG_URL
     param["verified"] = verified
-    print(param["urls"])
     return param
