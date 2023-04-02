@@ -86,7 +86,6 @@ def otp(request):
         return redirect("/courses/")
     else:
 
-        print(saved_user.otp == int(request.POST.get("otp")),int(request.POST.get("otp")),saved_user.otp)
         param["page_msg"] = "otp not matched"
         return render(request, "user/otp_verification.html", param)
 
@@ -102,6 +101,5 @@ def resendOtp(request):
         print("Extend user not found")
     user.otp = otp
     user.save()
-    sendEmail(otp, request.user,request.user.email)
-    # print("otp send")
+    SendEmailThread(otp=otp, username=request.user, email=user.email).start()
     return redirect("/auth/otp")
