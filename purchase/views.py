@@ -1,13 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import get_template
+
 from django.views.decorators.csrf import csrf_exempt
 from courses.models import Course
 from django.contrib.auth.models import User
 
 from home.templatetags import url
+from .email import PurchaseEmailThread
 from .models import PaymentInfo, FailedPayment
 from django.conf import settings
 import stripe
@@ -19,23 +19,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 ADMIN_EMAIL = "princegoswami.space@gmail.com"
 
 
-def sendEmail(user,details:dict, email="princegoswami.space@gmail.com", temp="email/payment_info_admin.html" ):
-    #TODO: set setting.admin_email
-    #TODO: chnage email subject
-    html = get_template(temp)
-    param = {'username': user, 'payment_method':details["method"], "upi":details["upi"], "course":details["course"]}
-    html_content = html.render(param)
-    subject = f"New Payment for {details['course']}" if email == ADMIN_EMAIL else f"Thanks for your Purchase"
-    from_email = settings.EMAIL_HOST_USER
-    to = email
-    try:
-        msg = EmailMultiAlternatives(subject, html_content, from_email, [to])
-        msg.attach_alternative(html_content, "text/html")
-        msg.send()
-    except:
-        print("Error in sending the email")
-        return -1
-    return 0
+
 
 
 @login_required(login_url="/auth/")
@@ -45,7 +29,6 @@ def index(request, courseId):
         "upi":False,
         "course":""
     }
-    print(courseId)
     purchase_id = 0
     try:
         user = User.objects.get(id=request.user.id)
@@ -72,14 +55,9 @@ def index(request, courseId):
     else:
         if is_purchased.payment_completed:
             return HttpResponse("course already purchased")
-
-        if request.FILES.get("upi_img", False):
-            is_purchased.upi_img = request.FILESS["upi_img"]
-            details["method"] = "upi"
-            details["upi"] = True
-            details["course"] = course.title
-            sendEmail(request.user, details=details)
-            return HttpResponse("wait for the verification")
+        PurchaseEmailThread(username=request.user, course=course.title, method="online", upi=False).start()
+        PurchaseEmailThread(username=request.user, course=course.title, method="online", upi=False,
+                            email=request.user.email).start()
         is_purchased.save()
 
     checkout_session = stripe.checkout.Session.create(
@@ -144,9 +122,11 @@ def upiPayment(request, courseId):
         is_purchased = PaymentInfo.objects.get(course=course, user=user)
         is_purchased.upi_img = request.FILES['upi_img']
         is_purchased.save()
-    details = {"method": "upi", "upi": True, "course": course.title, "username":request.user}
-    sendEmail(request.user, details=details)
-    sendEmail(request.user, details=details, email=request.user.email, temp="email/payment_info_user.html")
+    # details = {"method": "upi", "upi": True, "course": course.title, "username":request.user}
+    # sendEmail(request.user, details=details)
+    PurchaseEmailThread(username=request.user, course=course.title, method="upi", upi=True).start()
+    PurchaseEmailThread(username=request.user,course=course.title,method="upi",upi=True,email=request.user.email).start()
+    # sendEmail(request.user, details=details, email=request.user.email, temp="email/payment_info_user.html")
     #TODO:upi waiting page
     return render(request, "purchase/upi_wait.html", param)
 
@@ -182,9 +162,9 @@ def updateThePayment(session):
         payment.payment_completed=True
         payment.save()
         details = {"method": "upi", "upi": True, "course": course.title, "username": user.username}
-        sendEmail({"user":user.username}, details=details)
-        print(user.email)
-        sendEmail({"user":user.username}, details=details, email=user.email, temp="email/payment_info_user_online.html")
+        # sendEmail({"user":user.username}, details=details)
+        # print(user.email)
+        # sendEmail({"user":user.username}, details=details, email=user.email, temp="email/payment_info_user_online.html")
         #TODO : SEND EMAIL page  FIX
         #TODO: COURSE PURCHASE PAGE
         return 1
