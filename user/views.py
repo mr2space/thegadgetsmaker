@@ -41,7 +41,7 @@ def logout(request):
 
 def registeration(request):
     param = url.setPara(request, "")
-    if not request.user.is_authenticated:
+    if request.user.is_authenticated:
         param["page_msg"] = "logout to create new account"
         return redirect("/auth/")
     if request.method != "POST":
