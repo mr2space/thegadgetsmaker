@@ -1,11 +1,13 @@
 import random
 from django.conf import settings
 from user.models import ExtendUser
+from .log import *
 import math
 import random
 from django.template.loader import get_template
 from django.contrib.auth.models import User
 from django.core.mail import EmailMultiAlternatives
+import threading
 
 
 def otpGenerator() -> int:
@@ -17,7 +19,31 @@ def otpGenerator() -> int:
     return int(otp)
 
 
-def sendEmail(otp: int, username,user_email = None):
+class SendEmailThread(threading.Thread):
+    def __init__(self, username, email, otp):
+        self.username = username
+        self.email = email
+        self.otp = otp
+        threading.Thread.__init__(self)
+
+    def run(self):
+        try:
+            html = get_template("email/otp.html")
+            param = {'username': self.username, 'otp': self.otp}
+            html_content = html.render(param)
+            subject = f"Welcome {self.username} to our gadgets maker "
+            from_email = settings.EMAIL_HOST_USER
+            to = self.email
+            msg = EmailMultiAlternatives(subject, html_content, from_email, [to])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
+        except Exception as error:
+            print("Error in sending the email", error)
+            return -1
+        return 0
+
+
+def sendEmail(otp: int, username, user_email=None):
     html = get_template("email/otp.html")
     param = {'username': username, 'otp': otp}
     html_content = html.render(param)
@@ -49,8 +75,8 @@ def savingUserModel(request):
     except Exception as error:
         print("some error occur in saving the user")
         print(error)
+        User.objects.filter(id=new_user).delete()
         return -1
-    sendEmail(otp, username=request.user.username, email=request.user.email)
     try:
         print("here")
         new_extenduser = ExtendUser(
@@ -62,11 +88,13 @@ def savingUserModel(request):
             otp=otp,
         )
         if request.FILES.get("profile", False):
-            print("its done")
             new_extenduser.profile = request.FILES["profile"]
         new_extenduser.save()
     except Exception as error:
         print("some error occur in saving extend user")
-        print(error, request.FILES)
+        print(error)
+        User.objects.filter(id=new_user).delete()
         return -1
+    logTheUser(request)
+    SendEmailThread(otp=otp, username=request.POST.get('username'), email=request.POST.get('email')).start()
     return 0
