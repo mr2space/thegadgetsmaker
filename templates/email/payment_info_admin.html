@@ -6,11 +6,33 @@
 </head>
 <body>
 
-New payment is made by {{ username }} by a {{ payment_method }} for {{ course }}
+<style>
+    body{
+        background: #12151D;
+    }
+    p{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 47px;
+    text-align: center;
+    letter-spacing: 0.04em;
+    color: #FFFFFF;
+    }
 
-{% if upi %}
+</style>
+<p>
+New payment is made by {{ username }} by a {{ payment_method }} for {{ course }}
+</p>
+
+<p>
+   {% if upi %}
   please verify the payment at admin panel
 {% endif %}
+
+</p>
+
 
 </body>
 </html>
