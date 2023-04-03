@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.core.mail import EmailMultiAlternatives
 import threading
 
-
+ADMIN_EMAIL = "princegoswami.space@gmail.com"
 def otpGenerator() -> int:
     # variable to store digit use in Otp
     digits = '123456789'
@@ -32,7 +32,7 @@ class SendEmailThread(threading.Thread):
             param = {'username': self.username, 'otp': self.otp}
             html_content = html.render(param)
             subject = f"Welcome {self.username} to our gadgets maker "
-            from_email = settings.EMAIL_HOST_USER
+            from_email = ADMIN_EMAIL
             to = self.email
             msg = EmailMultiAlternatives(subject, html_content, from_email, [to])
             msg.attach_alternative(html_content, "text/html")
@@ -48,7 +48,7 @@ def sendEmail(otp: int, username, user_email=None):
     param = {'username': username, 'otp': otp}
     html_content = html.render(param)
     subject = f"Welcome {username} to our gadgets maker "
-    from_email = settings.EMAIL_HOST_USER
+    from_email = ADMIN_EMAIL
     to = user_email
     try:
         msg = EmailMultiAlternatives(subject, html_content, from_email, [to])
