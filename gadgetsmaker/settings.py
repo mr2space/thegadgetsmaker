@@ -173,13 +173,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+# EMAIL_USE_TLS = True
 
 # ----------- WARNING !!!! DO NOT DISCLOSE ----------------------------
-EMAIL_HOST_USER = "mrspace.pro@gmail.com"
-EMAIL_HOST_PASSWORD = "uxjtywoernxikseq"
+EMAIL_HOST_USER = "apikey"
+EMAIL_HOST_PASSWORD = "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"
 
 
 # ----------------------SENSITIVE DATA !!! DO NOT DISCLOSE --------------------
