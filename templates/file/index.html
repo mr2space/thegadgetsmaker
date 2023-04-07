@@ -1,0 +1,55 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title %}
+   Courses
+{% endblock %}
+
+{% block css %}
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+</style>
+<link rel="stylesheet" href="{% static 'courses/courses.css' %}">
+{% endblock %}
+
+{% block root %}
+
+    <div class="cards container">
+    {% for file in files %}
+        <div class="card">
+            <div class="img-box">
+                <div class="red decorator">
+                    <div class="skew"></div>
+                    <div class="skew"></div>
+                    <div class="skew"></div>
+                </div>
+                <div class="yellow decorator">
+                    <div class="skew"></div>
+                    <div class="skew"></div>
+                    <div class="skew"></div>
+                </div>
+                <img src="{{img_url}}{{file.file_title_img}}" />
+            </div>
+            <div class="info-box">
+                <div class="title">
+                    <span>{{file.file_title}}</span>
+                </div>
+                <div class="para">
+                    <p>
+                        {{file.short_desc}}
+                    </p>
+                </div>
+                <div class="read-wrapper">
+                    <a href="/codes/code/{{file.id}}">
+                    <div class="read-more">
+                        <img src="{% static 'courses/Polygon.png' %}" class="triangle" srcset="">
+                        <img src="{% static 'courses/plus.png' %}" class="plus-logo">
+                    </div>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}
