@@ -79,8 +79,9 @@ def savingUserModel(request):
         return -1
     try:
         print("here")
+        user = User.objects.get(username=request.POST.get('username'))
         new_extenduser = ExtendUser(
-            username=User.objects.get(username=request.POST.get('username')),
+            username=user.id,
             phone_number=request.POST.get("phone_number"),
             full_name=request.POST.get('fullname'),
             address=request.POST.get('address'),
