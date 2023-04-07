@@ -1,11 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-
 from django.views.decorators.csrf import csrf_exempt
 from courses.models import Course
 from django.contrib.auth.models import User
-
 from home.templatetags import url
 from .email import PurchaseEmailThread
 from .models import PaymentInfo, FailedPayment
@@ -127,14 +125,13 @@ def upiPayment(request, courseId):
     PurchaseEmailThread(username=request.user, course=course.title, method="upi", upi=True).start()
     PurchaseEmailThread(username=request.user,course=course.title,method="upi",upi=True,email=request.user.email).start()
     # sendEmail(request.user, details=details, email=request.user.email, temp="email/payment_info_user.html")
-    #TODO:upi waiting page
     return render(request, "purchase/upi_wait.html", param)
 
 
 @login_required(login_url="/auth/")
 def payment_success(request):
     param = url.setPara(request, "")
-    #TODO: paymenr success page
+    #TODO: payment success page
     return HttpResponse("payment success")
 
 
@@ -203,5 +200,5 @@ def stripeWebhook(request):
         if updateThePayment(session):
             return HttpResponse(status=200)
 
-    return  HttpResponse(status=500)
+    return HttpResponse(status=500)
 
