@@ -12,6 +12,8 @@ def isTeacher(user):
         status = user.groups.filter(name="teacher").count() > 0
         return status
     return False
+
+
 def uploadFiles(request):
     param = url.setPara(request, "")
     if request.method != 'POST':
