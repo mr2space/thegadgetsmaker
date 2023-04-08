@@ -22,8 +22,8 @@
                 <div class="price-box">
               {{course.price}}Rs
             </div>
-<a href="/payment/{{course.id}}" id="pay_online">purchase</a>
-<a href="/payment/upi/{{course.id}}" id="pay_upi">purchase via upi </a>
+<a href="/payment/course/{{course.id}}" id="pay_online">purchase</a>
+<a href="/payment/course/upi/{{course.id}}" id="pay_upi">purchase via upi </a>
 {% endif %}
 
                 {% if not show_payment_link and meet %}
