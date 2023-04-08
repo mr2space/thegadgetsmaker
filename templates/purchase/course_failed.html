@@ -1,0 +1,36 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title %}
+   Course Purchased
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'purchase/success.css' %}">
+{% endblock %}
+
+{% block root %}
+<div class="cards-wrapper">
+    <div class="card-wrapper">
+        <div class="heading">
+            <h1>Order Failed !</h1>
+            <p>
+                Try Again
+            </p>
+        </div>
+
+        <div class="product-info">
+            <div class="title">
+                 {{course.title}}
+            </div>
+            <div class="amount">
+                Failed
+            </div>
+        </div>
+
+        <div class="payment">
+            <span>payment id: {{payment_id}}</span>
+        </div>
+    </div>
+    </div>
+{% endblock %}
