@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import FileForm
@@ -6,7 +7,11 @@ from home.templatetags import url
 
 
 # upload file
-
+def isTeacher(user):
+    if user:
+        status = user.groups.filter(name="teacher").count() > 0
+        return status
+    return False
 def uploadFiles(request):
     param = url.setPara(request, "")
     if request.method != 'POST':
@@ -15,8 +20,8 @@ def uploadFiles(request):
     form = FileForm(request.POST, request.FILES)
     if form.is_valid():
         form.save()
-        return HttpResponse("file created")
-    return HttpResponse("form not valid")
+        return redirect("/codes")
+    return HttpResponse("<h1> Form not valid </h1>")
 
 
 # show files
@@ -33,6 +38,10 @@ def showFiles(request):
 
 # update the files
 
+
+
+@login_required(login_url="/auth/")
+@user_passes_test(isTeacher, login_url="/auth/")
 def updateFiles(request,id):
     param = url.setPara(request, "")
     instance = get_object_or_404(Files, pk=id)
@@ -46,4 +55,28 @@ def updateFiles(request,id):
         return redirect('/codes')
     else:
         return HttpResponse("<h1> Form not valid </h1>")
+
+
+
+def index(request,id):
+    param = url.setPara(request, "Courses")
+    try:
+        file = Files.objects.get(id=id)
+        param["file"] = file
+        param['img_url'] = "/media/"
+        param["show_payment_link"] = True
+    except:
+        print("course id not matched")
+    # try:
+    #     user = User.objects.get(id=request.user.id)
+    #     is_purchased = PaymentInfo.objects.get(course=course, user=user)
+    #     param["show_payment_link"] = not (is_purchased.payment_completed)
+    #     param["meet"] = course.meet_link
+    #     print("purchased")
+    # except Exception as error:
+    #     print(error)
+    #     pass
+    param["urls"] = url.returnActiveUrl(active_url="Courses")
+    return render(request, "file/code.html", param)
+
 
