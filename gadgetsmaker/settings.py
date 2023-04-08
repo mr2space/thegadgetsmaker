@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'courses.apps.CoursesConfig',
     'purchase.apps.PurchaseConfig',
     'home.apps.HomeConfig',
+    'file.apps.FileConfig',
     'ckeditor',
     'ckeditor_uploader',
     'tinymce',
