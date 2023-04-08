@@ -22,7 +22,7 @@
     <form action="/payment/upi/{{courseId}}" method="post" enctype="multipart/form-data">
          {% csrf_token %}
         <div class="upload">
-            <input type="file" id="file-input" name="upi_img" accept="image/*" / required>
+            <input type="file" id="file-input" name="upi_img" accept="image/*"  required />
             <label for="file-input">
                 <i class="fa-solid fa-arrow-up-from-bracket"></i>
                 &nbsp; Choose File To Upload
