@@ -19,12 +19,13 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    path('',include("home.urls")),
+    path('', include("home.urls")),
     path('admin/', admin.site.urls),
     path('auth/', include('user.urls')),
     path('courses/', include('courses.urls')),
     path('payment/', include('purchase.urls')),
-    path('blogs/',include('blog.urls')),
+    path('blogs/', include('blog.urls')),
+    path('codes/', include('file.urls')),
     path('tinymce/', include('tinymce.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
