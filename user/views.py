@@ -48,7 +48,8 @@ def registeration(request):
         return redirect("/auth/")
     if savingUserModel(request):
         return redirect("/auth/")
-    return redirect("/auth/otp")
+    #TODO: REDIRECT TO /AUTH/OTP
+    return redirect("/")
 
 
 @login_required(login_url="/auth/")

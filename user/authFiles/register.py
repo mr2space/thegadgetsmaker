@@ -85,9 +85,10 @@ def savingUserModel(request):
             phone_number=request.POST.get("phone_number"),
             full_name=request.POST.get('fullname'),
             address=request.POST.get('address'),
-            is_verified=False,
+            is_verified=True,
             otp=otp,
         )
+        #TODO: CORRECCT THE VERIFIED
         if request.FILES.get("profile", False):
             new_extenduser.profile = request.FILES["profile"]
         new_extenduser.save()
