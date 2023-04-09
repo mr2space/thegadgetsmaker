@@ -59,6 +59,7 @@ body {
     border-radius: 10px;
     background: var(--card-background);
     display: flex;
+    flex-wrap:wrap;
     position: relative;
     gap: 20px;
 }
@@ -192,4 +193,22 @@ body {
     border-radius: 10px;
     color:white;
     background: var(--red);
+}
+
+@media screen and (max-width: 680px) {
+    .course-line{
+        justify-content: center;
+        align-items: center;
+    }
+
+        .course-info{
+            width: 100%;
+        }
+
+        .img {
+
+            width: 260px;
+            height: 100%;
+
+        }
 }
