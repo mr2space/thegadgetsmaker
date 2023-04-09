@@ -64,24 +64,29 @@ def savingUserModel(request):
     name_list = request.POST.get('fullname').split()
     otp = otpGenerator()
     try:
-        new_user = User.objects.create_user(
-            username=request.POST.get('username'),
-            password=request.POST.get('password'),
-            email=request.POST.get('email'),
-            first_name=name_list[0],
-            last_name=name_list[1] if len(name_list) > 1 else '',
-        )
-        new_user.save()
-    except Exception as error:
-        print("some error occur in saving the user")
-        print(error)
-        User.objects.filter(id=new_user).delete()
-        return -1
+        user = User.objects.get(username = request.POST.get('username'))
+        return [-1, "username already taken"]
+    except:
+        try:
+            new_user = User.objects.create_user(
+                username=request.POST.get('username'),
+                password=request.POST.get('password'),
+                email=request.POST.get('email'),
+                first_name=name_list[0],
+                last_name=name_list[1] if len(name_list) > 1 else '',
+            )
+            new_user.save()
+        except Exception as error:
+            print("some error occur in saving the user")
+            print(error)
+            User.objects.filter(id=new_user).delete()
+            return [-1, "username already taken"]
+
     try:
         print("here")
         user = User.objects.get(username=request.POST.get('username'))
         new_extenduser = ExtendUser(
-            username=user.id,
+            username=user,
             phone_number=request.POST.get("phone_number"),
             full_name=request.POST.get('fullname'),
             address=request.POST.get('address'),
@@ -96,7 +101,8 @@ def savingUserModel(request):
         print("some error occur in saving extend user")
         print(error)
         User.objects.filter(id=new_user).delete()
-        return -1
+        return [-1, "username already taken"]
+
     logTheUser(request)
     SendEmailThread(otp=otp, username=request.POST.get('username'), email=request.POST.get('email')).start()
-    return 0
+    return [0,"account created"]

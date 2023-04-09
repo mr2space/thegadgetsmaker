@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'tinymce',
     'blog.apps.BlogConfig',
+    "bootstrap_datepicker_plus",
 
 ]
 

@@ -46,8 +46,10 @@ def registeration(request):
     if request.method != "POST":
         print("not post")
         return redirect("/auth/")
-    if savingUserModel(request):
-        return redirect("/auth/")
+    obj = savingUserModel(request)
+    if obj[0]:
+        param["page_msg"] = obj[1]
+        return render(request, "user/index.html",param)
     #TODO: REDIRECT TO /AUTH/OTP
     return redirect("/")
 
