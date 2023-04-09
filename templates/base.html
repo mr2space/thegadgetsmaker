@@ -85,7 +85,7 @@
     {% if page_msg %}
     <section id="msg-box">
         <p>{{ page_msg }}</p>
-        <div class="close-btn">X</div>
+        <div onclick="closemsg()" class="close-btn">X</div>
     </section>
     {% endif %}
 {% block root %}{% endblock %}
