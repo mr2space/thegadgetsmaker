@@ -155,3 +155,17 @@ body {
     background-color: var(--yellow);
     transition: 0.3s ease-in-out;
 }
+
+
+
+@media screen and (max-width: 680px) {
+    .wrapper{
+        padding: 10px;
+    }
+    .heading{
+        width: 100%;
+    }
+    .body{
+        width: 100%;
+    }
+}
