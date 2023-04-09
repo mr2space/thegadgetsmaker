@@ -195,7 +195,7 @@ body {
     background: var(--red);
 }
 
-@media screen and (max-width: 680px) {
+@media screen and (max-width: 800px) {
     .course-line{
         justify-content: center;
         align-items: center;

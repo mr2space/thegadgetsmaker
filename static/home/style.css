@@ -117,7 +117,7 @@ body {
     z-index: -1;
 }
 
-@media screen and (max-width: 680px) {
+@media screen and (max-width: 800px) {
     #hero {
         padding: 20px;
         padding-top: 40px;
@@ -416,7 +416,7 @@ body {
 
 
 
-@media screen and (max-width: 680px) {
+@media screen and (max-width: 800px) {
     .course-line{
         justify-content: center;
         align-items: center;
@@ -437,7 +437,7 @@ body {
         flex-wrap:wrap-reverse;
     }
 
-@media screen and (max-width: 680px){
+@media screen and (max-width: 800px){
 
     .feature{
         gap:20px;

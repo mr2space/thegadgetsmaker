@@ -240,7 +240,7 @@ label {
 }
 
 
-@media screen and (max-width: 680px){
+@media screen and (max-width: 800px){
     .row{
         flex-direction: column;
         justify-content: center;
