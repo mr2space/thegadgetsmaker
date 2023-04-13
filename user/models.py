@@ -30,10 +30,10 @@ class ExtendUser(models.Model):
     def __str__(self):
         return  self.full_name
 
-    def save(self, *args, **kwargs):
-        # if not self.id:
-        self.uploadedImage = self.compressImage(self.profile)
-        super(ExtendUser, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     # if not self.id:
+    #     self.uploadedImage = self.compressImage(self.profile)
+    #     super(ExtendUser, self).save(*args, **kwargs)
 
     def compressImage(self, profile):
         imageTemproary = Image.open(profile)
