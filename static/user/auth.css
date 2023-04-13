@@ -253,6 +253,7 @@ label {
         }
 
     .form-box[id="register-form"]{
+        margin-top:40px;
         height: 550px;
     }
 }
