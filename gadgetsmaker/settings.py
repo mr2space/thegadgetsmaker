@@ -11,10 +11,13 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -23,10 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ol_*0o(+=ojgh+db!*l5_b@sg!2r-_9$!^qe=)x57!+^!kh#^s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ["*"]
-
 
 # Application definition
 
@@ -68,7 +70,7 @@ ROOT_URLCONF = 'gadgetsmaker.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -83,17 +85,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'gadgetsmaker.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME':'gadgets',
-        'USER':'maker',
-        'PASSWORD':'themaker',
-        'HOST':'127.0.0.1',
+        'NAME': env('DATABASE'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASSWORD'),
+        'HOST': '127.0.0.1',
         'PORT': '5432'
     }
 }
@@ -103,16 +104,15 @@ TINYMCE_DEFAULT_CONFIG = {
     "width": "960px",
     "menubar": "file edit view insert format tools table help",
     "plugins": "advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code "
-    "fullscreen insertdatetime media table paste code help wordcount spellchecker",
+               "fullscreen insertdatetime media table paste code help wordcount spellchecker",
     "toolbar": "undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft "
-    "aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor "
-    "backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | "
-    "fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | "
-    "a11ycheck ltr rtl | showcomments addcomment code",
+               "aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor "
+               "backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | "
+               "fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | "
+               "a11ycheck ltr rtl | showcomments addcomment code",
     "custom_undo_redo_levels": 10,
     # "language": "es_ES",  # To force a specific language instead of the Django current language.
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -132,7 +132,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -144,7 +143,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
@@ -154,7 +152,7 @@ STATICFILES_DIRS = [
 ]
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
-#media URLS
+# media URLS
 
 CKEDITOR_UPLOAD_PATH = 'blog/img/'
 CKEDITOR_CONFIGS = {
@@ -164,7 +162,6 @@ CKEDITOR_CONFIGS = {
     },
 }
 
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
@@ -172,7 +169,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.sendgrid.net'
@@ -183,9 +179,8 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = "apikey"
 EMAIL_HOST_PASSWORD = "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"
 
-
 # ----------------------SENSITIVE DATA !!! DO NOT DISCLOSE --------------------
 
-STRIPE_SECRET_KEY = "sk_test_51KzBjHSJFnoDM4GlXXGa7rFQ5DILd2iKlvzArDbgGOyJPey7zQEK6hltpzCiahiJ1WM3Fa3ddyYnGoAJ4jNkmwbu00n2ur6mGV"
-STRIPE_PUBLIC_KEY = "pk_test_51KzBjHSJFnoDM4Gl4GVhmYJmDZ1U41dmN0U0QfQ45qLPdNTwabAqxGSfPO4O2UBpt07Mpw3SaVRvv4umRgDZgLT200haNu7j0F"
-STRIPE_WEBHOOK_KEY = "whsec_172907c9261e97d8749840821044a5afa3b459a61b64099c0a6946cbeea5acb6"
+STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
+STRIPE_PUBLIC_KEY = env('STRIPE_PUBLIC_KEY')
+STRIPE_WEBHOOK_KEY = env('STRIPE_WEBHOOK_KEY')
