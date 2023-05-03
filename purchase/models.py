@@ -35,7 +35,7 @@ class FailedPayment(models.Model):
 
 
 class FilePaymentInfo(models.Model):
-    #file = models.ForeignKey(to=Files, on_delete=models.CASCADE)
+    file = models.ForeignKey(to=Files, on_delete=models.CASCADE)
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
     method = models.CharField(max_length=40, default=" ")
     payment_id = models.TextField()
