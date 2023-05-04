@@ -77,6 +77,7 @@ def index(request,id):
         user = User.objects.get(id=request.user.id)
         is_purchased = FilePaymentInfo.objects.get(course=file, user=user)
         param["show_payment_link"] = not (is_purchased.payment_completed)
+        param["p"] = is_purchased
         print("purchased")
     except Exception as error:
         print(error)
