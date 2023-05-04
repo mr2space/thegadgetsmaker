@@ -75,8 +75,8 @@ def index(request,id):
         print("course id not matched")
     try:
         user = User.objects.get(id=request.user.id)
-        is_purchased = FilePaymentInfo.objects.get(course=file, user=user)
-        param["show_payment_link"] = not (is_purchased.payment_completed)
+        is_purchased = FilePaymentInfo.objects.get(file=file, user=user)
+        param["show_payment_link"] = not(is_purchased.payment_completed)
         param["p"] = is_purchased
         print("purchased")
     except Exception as error:
