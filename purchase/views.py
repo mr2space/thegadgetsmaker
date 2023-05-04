@@ -246,7 +246,6 @@ def codePurchase(request,id):
                     'unit_amount': int(file.price * 100),
                     'product_data': {
                         'name': file.file_title,
-
                     },
                 },
                 'quantity': 1,

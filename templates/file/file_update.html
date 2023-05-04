@@ -13,7 +13,7 @@
 
 {% load crispy_forms_tags %}
 
-<form action="/code/new/" method="post" class="mx-5 my-5 " style="width:80%;color:white;" enctype="multipart/form-data">
+<form action="/code/upadte/{{id}}" method="post" class="mx-5 my-5 " style="width:80%;color:white;" enctype="multipart/form-data">
     {% csrf_token %}
     {{form.media}}
     {{ form|crispy }}

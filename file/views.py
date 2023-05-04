@@ -10,13 +10,15 @@ from home.templatetags import url
 
 
 # upload file
+
 def isTeacher(user):
     if user:
         status = user.groups.filter(name="teacher").count() > 0
         return status
     return False
 
-
+@login_required(login_url="/auth/")
+@user_passes_test(isTeacher, login_url="/auth/")
 def uploadFiles(request):
     param = url.setPara(request, "")
     if request.method != 'POST':
