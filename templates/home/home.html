@@ -52,12 +52,19 @@
 <section id="blog" class="feature">
     <div class="section-heading">
         Blog
+        <div class="admin">
+            <a href="/blogs/new" class="add">Add New</a>
+        </div>
     </div>
 
     {% for c in blogs %}
         <div class="course-wrapper">
 
             <div class="course-line">
+                <div class="admin">
+                    <a href="/blogs/update/{{c.id}}" class="update">Update</a>
+                    <a href="/blogs/delete/{{c.id}}" class="delete"> Delete </a>
+                </div>
                 <div class="img-box">
                     <div class="img">
                         <div class="red decorator">
