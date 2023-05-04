@@ -78,8 +78,8 @@ def index(request, courseId):
             "user_id":user.id,
         },
         mode='payment',
-        success_url=f'http://127.0.0.1:8000/payment/course/success/{purchase_id}/{course.id}',
-        cancel_url=f'http://127.0.0.1:8000/payment/course/failed/{course.id}',
+        success_url=f'https://thegadgetsmaker.in/payment/course/success/{purchase_id}/{course.id}',
+        cancel_url=f'https://thegadgetsmaker.in/payment/course/failed/{course.id}',
     )
     return redirect(checkout_session.url, code=303)
 
