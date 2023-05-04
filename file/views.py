@@ -55,7 +55,7 @@ def updateFiles(request,id):
     if request.method != 'POST':
         param['form'] = FileForm(instance=instance)
         param["id"] = id
-        return render(request, 'file/file_upload.html', param)
+        return render(request, 'file/file_update.html', param)
     form = FileForm(request.POST,request.FILES, instance=instance)
     if form.is_valid():
         form.save()
