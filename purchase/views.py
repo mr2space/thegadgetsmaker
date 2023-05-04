@@ -4,7 +4,6 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from courses.models import Course
 from django.contrib.auth.models import User
-
 from file.models import Files
 from home.templatetags import url
 from .email import PurchaseEmailThread
