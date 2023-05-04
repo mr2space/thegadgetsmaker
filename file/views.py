@@ -1,6 +1,9 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
+
+from purchase.models import FilePaymentInfo
 from .forms import FileForm
 from .models import Files
 from home.templatetags import url
@@ -66,19 +69,17 @@ def index(request,id):
         file = Files.objects.get(id=id)
         param["file"] = file
         param['img_url'] = "/media/"
+
         param["show_payment_link"] = True
     except:
         print("course id not matched")
-    # try:
-    #     user = User.objects.get(id=request.user.id)
-    #     is_purchased = PaymentInfo.objects.get(course=course, user=user)
-    #     param["show_payment_link"] = not (is_purchased.payment_completed)
-    #     param["meet"] = course.meet_link
-    #     print("purchased")
-    # except Exception as error:
-    #     print(error)
-    #     pass
-    param["urls"] = url.returnActiveUrl(active_url="Courses")
+    try:
+        user = User.objects.get(id=request.user.id)
+        is_purchased = FilePaymentInfo.objects.get(course=file, user=user)
+        param["show_payment_link"] = not (is_purchased.payment_completed)
+        print("purchased")
+    except Exception as error:
+        print(error)
     return render(request, "file/code.html", param)
 
 
