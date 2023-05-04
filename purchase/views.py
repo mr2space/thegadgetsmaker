@@ -315,10 +315,10 @@ def stripeWebhook(request):
         )
     except ValueError as e:
         # Invalid payload
-        return HttpResponse(e,status=401)
+        return HttpResponse(f"{e}",status=401)
     except stripe.error.SignatureVerificationError as e:
         # Invalid signature
-        return HttpResponse(e,status=402)
+        return HttpResponse(f"{e}",status=402)
 
     # Handle the checkout.session.completed event
     if event['type'] == 'checkout.session.completed':
@@ -330,7 +330,7 @@ def stripeWebhook(request):
             if updateFilePayment(session):
                 return HttpResponse(status=200)
             print(session["metadata"]["type"])
-    return HttpResponse(status=500)
+    return HttpResponse(f"failed in 500 ",status=500)
 
 
 
