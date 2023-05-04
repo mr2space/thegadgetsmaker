@@ -260,8 +260,8 @@ def codePurchase(request,id):
             "user_id": user.id,
         },
         mode='payment',
-        success_url=f'http://127.0.0.1:8000/payment/code/success/{purchase_id}/{id}',
-        cancel_url=f'http://127.0.0.1:8000/payment/code/failed/{id}',
+        success_url=f'https://thegadgetsmaker.in/payment/code/success/{purchase_id}/{id}',
+        cancel_url=f'https://thegadgetsmaker.in/payment/code/failed/{id}',
     )
     return redirect(checkout_session.url, code=303)
 
