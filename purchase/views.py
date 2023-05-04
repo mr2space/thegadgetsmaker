@@ -64,7 +64,6 @@ def index(request, courseId):
                     'unit_amount': int(course.price*100),
                     'product_data': {
                         'name': course.title,
-
                     },
                 },
                 'quantity': 1,
@@ -80,6 +79,7 @@ def index(request, courseId):
         success_url=f'https://thegadgetsmaker.in/payment/course/success/{purchase_id}/{course.id}',
         cancel_url=f'https://thegadgetsmaker.in/payment/course/failed/{course.id}',
     )
+    print("success is same 1")
     return redirect(checkout_session.url, code=303)
 
 
@@ -262,6 +262,7 @@ def codePurchase(request,id):
         success_url=f'https://thegadgetsmaker.in/payment/code/success/{purchase_id}/{id}',
         cancel_url=f'https://thegadgetsmaker.in/payment/code/failed/{id}',
     )
+    print("success is same")
     return redirect(checkout_session.url, code=303)
 
 def updateFilePayment(session):
@@ -314,10 +315,10 @@ def stripeWebhook(request):
         )
     except ValueError as e:
         # Invalid payload
-        return HttpResponse(status=401)
+        return HttpResponse(e,status=401)
     except stripe.error.SignatureVerificationError as e:
         # Invalid signature
-        return HttpResponse(status=402)
+        return HttpResponse(e,status=402)
 
     # Handle the checkout.session.completed event
     if event['type'] == 'checkout.session.completed':
@@ -370,8 +371,9 @@ def fileUpiPayment(request, id):
         is_purchased.upi_img = request.FILES['upi_img']
         is_purchased.save()
     # details = {"method": "upi", "upi": True, "course": course.title, "username":request.user}
-    # sendEmail(request.user, details=details)
-    PurchaseEmailThread(username=request.user, course=file.file_title, method="upi", upi=True).start()
-    PurchaseEmailThread(username=request.user,course=file.file_title,method="upi",upi=True,email=request.user.email).start()
+    # sendEmail(request.user, details=details)]
+    #TODO : add email service
+    #PurchaseEmailThread(username=request.user, course=file.file_title, method="upi", upi=True).start()
+    #PurchaseEmailThread(username=request.user,course=file.file_title,method="upi",upi=True,email=request.user.email).start()
     # sendEmail(request.user, details=details, email=request.user.email, temp="email/payment_info_user.html")
     return render(request, "purchase/upi_wait.html", param)
