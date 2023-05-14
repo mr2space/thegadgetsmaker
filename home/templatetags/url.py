@@ -39,7 +39,12 @@ def returnActiveUrl(urls={}, active_url="Home"):
     "Blog":{
         "url":"/blogs",
         "status":'',
+    },
+    "Codes":{
+        "url":"/codes",
+        "status":""
     }
+
     }
     url = urls.get(active_url,{"status":False})
     url['status'] = "active"
