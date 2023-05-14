@@ -33,9 +33,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: git pull
-        run: |
-          git pull
       - name: git Collect
         run: |
           python manage.py collectstatic
