@@ -372,7 +372,7 @@ def fileUpiPayment(request, id):
     # details = {"method": "upi", "upi": True, "course": course.title, "username":request.user}
     # sendEmail(request.user, details=details)]
     #TODO : add email service
-    #PurchaseEmailThread(username=request.user, course=file.file_title, method="upi", upi=True).start()
-    #PurchaseEmailThread(username=request.user,course=file.file_title,method="upi",upi=True,email=request.user.email).start()
+    PurchaseEmailThread(username=request.user, course=file.file_title, method="upi", upi=True).start()
+    PurchaseEmailThread(username=request.user,course=file.file_title,method="upi",upi=True,email=request.user.email).start()
     # sendEmail(request.user, details=details, email=request.user.email, temp="email/payment_info_user.html")
     return render(request, "purchase/upi_wait.html", param)

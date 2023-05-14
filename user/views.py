@@ -51,7 +51,7 @@ def registeration(request):
         param["page_msg"] = obj[1]
         return render(request, "user/index.html",param)
     #TODO: REDIRECT TO /AUTH/OTP
-    return redirect("/")
+    return redirect("/auth/otp")
 
 
 @login_required(login_url="/auth/")
