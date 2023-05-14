@@ -1,9 +1,10 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from courses.models import Course
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,Group
+from user.models import ExtendUser
 from file.models import Files
 from home.templatetags import url
 from .email import PurchaseEmailThread
@@ -17,11 +18,20 @@ import stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
 ADMIN_EMAIL = "princegoswami.space@gmail.com"
 
+def isVerified(user):
+    if user:
+        status = user.groups.filter(name="user").count() > 0
+        return status
+    return False
+
+
+
 
 
 
 
 @login_required(login_url="/auth/")
+
 def index(request, courseId):
     details = {
         "method":"",
@@ -84,6 +94,7 @@ def index(request, courseId):
 
 
 @login_required(login_url="/auth/")
+@user_passes_test(isVerified, login_url="/auth/otp")
 def upiPayment(request, courseId):
     param = url.setPara(request, "")
     param["courseId"] = courseId
@@ -128,6 +139,7 @@ def upiPayment(request, courseId):
 
 
 @login_required(login_url="/auth/")
+@user_passes_test(isVerified, login_url="/auth/otp")
 def course_payment_success(request,purchase_id,id):
     param = url.setPara(request, "")
     course = Course.objects.get(id=id)
@@ -138,6 +150,7 @@ def course_payment_success(request,purchase_id,id):
 
 
 @login_required(login_url="/auth/")
+@user_passes_test(isVerified, login_url="/auth/otp")
 def course_payment_failed(request, id):
     param = url.setPara(request, "")
     course = Course.objects.get(id=id)
@@ -147,6 +160,7 @@ def course_payment_failed(request, id):
     return render(request, "purchase/course_failed.html", param)
 
 @login_required(login_url="/auth/")
+@user_passes_test(isVerified, login_url="/auth/otp")
 def code_payment_success(request,purchase_id,id):
     param = url.setPara(request, "")
     file = Files.objects.get(id=id)
@@ -157,6 +171,7 @@ def code_payment_success(request,purchase_id,id):
 
 
 @login_required(login_url="/auth/")
+@user_passes_test(isVerified, login_url="/auth/otp")
 def code_payment_failed(request, id):
     param = url.setPara(request, "")
     file = Files.objects.get(id=id)
@@ -204,6 +219,7 @@ def updateThePayment(session):
 
 
 @login_required(login_url="/auth/")
+@user_passes_test(isVerified, login_url="/auth/otp")
 def codePurchase(request,id):
     details = {
         "method": "",
@@ -334,6 +350,7 @@ def stripeWebhook(request):
 
 
 @login_required(login_url="/auth/")
+@user_passes_test(isVerified, login_url="/auth/otp")
 def fileUpiPayment(request, id):
     param = url.setPara(request, "")
     param["code_id"] = id

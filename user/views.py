@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from home.templatetags import url
 from .authFiles.register import *
 from .authFiles.log import *
-
+from django.contrib.auth.models import User , Group
 
 # Create your views here.
 
@@ -58,6 +58,7 @@ def registeration(request):
 def otp(request):
     param = url.setPara(request, "")
     # TODO: OTP
+    o = -1
     if request.method != "POST" :
         return render(request, "user/otp_verification.html",param)
     try:
@@ -81,6 +82,9 @@ def otp(request):
 
     if saved_user.otp == int(request.POST.get("otp")):
         try:
+            user = User.objects.get(username=request.user)
+            group = Group.objects.get(name="user")
+            user.groups.add(group)
             ExtendUser.objects.filter(username=request.user.id).update(is_verified=True)
         except Exception as error:
             print("not able to update the verify flag", error)
@@ -103,5 +107,5 @@ def resendOtp(request):
         print("Extend user not found")
     user.otp = otp
     user.save()
-    SendEmailThread(otp=otp, username=request.user, email=user.email).start()
+    SendEmailThread(otp=otp, username=request.user, email=request.user.email).start()
     return redirect("/auth/otp")
