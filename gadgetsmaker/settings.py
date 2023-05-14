@@ -170,11 +170,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django_ses.SESBackend'
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587
 # EMAIL_USE_TLS = True
 
+AWS_ACCESS_KEY_ID = 'AKIAVFQB2BC2NFF2YFUF'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_SES_REGION_NAME = 'eu-north-1'
+AWS_SES_REGION_ENDPOINT = 'email.eu-north-1.amazonaws.com'
 # ----------- WARNING !!!! DO NOT DISCLOSE ----------------------------
 EMAIL_HOST_USER = "apikey"
 EMAIL_HOST_PASSWORD = "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"
