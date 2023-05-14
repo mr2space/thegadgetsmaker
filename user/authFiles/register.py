@@ -64,9 +64,13 @@ def savingUserModel(request):
     name_list = request.POST.get('fullname').split()
     otp = otpGenerator()
     try:
+        # restrict user to only one email
         user = User.objects.get(username = request.POST.get('username'))
         return [-1, "username already taken"]
     except:
+        email = User.objects.filter(email=request.POST.get('email')).values()
+        if len(email) != 0:
+            return [-1, "eamil already registered "]
         try:
             new_user = User.objects.create_user(
                 username=request.POST.get('username'),

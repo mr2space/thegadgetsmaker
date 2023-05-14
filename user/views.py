@@ -10,13 +10,16 @@ from django.contrib.auth.models import User , Group
 
 def index(request):
     # TODO: AUTH PAGE
+    msg = request.GET.get("msg", None)
     param = url.setPara(request, "")
+    param['page_msg'] = msg
     return render(request, "user/index.html",param)
 
 
 def login(request):
     if request.method != "POST":
         return redirect("/auth/")
+
     if logTheUser(request):
         return redirect("/courses/")
     param = url.setPara(request, "")
@@ -42,7 +45,7 @@ def registeration(request):
     param = url.setPara(request, "")
     if request.user.is_authenticated:
         param["page_msg"] = "logout to create new account"
-        return redirect("/auth/")
+        return redirect(f"/auth/?msg={param['page_msg']}")
     if request.method != "POST":
         print("not post")
         return redirect("/auth/")
