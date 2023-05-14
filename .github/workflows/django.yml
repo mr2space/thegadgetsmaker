@@ -13,7 +13,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.7, 3.8, 3.9]
+        python-version: [3.9]
 
     steps:
     - uses: actions/checkout@v3
@@ -28,3 +28,18 @@ jobs:
     - name: Run Tests
       run: |
         python manage.py test
+
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: git pull
+        run: |
+          git pull
+      - name: git Collect
+        run: |
+          python manage.py collectstatic
+      - name: move static
+        run : mv static static2
+      - name: move
+        run : mv staticfiles static
