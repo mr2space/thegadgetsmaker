@@ -182,7 +182,7 @@ AWS_SES_REGION_ENDPOINT = 'email.eu-north-1.amazonaws.com'
 # ----------- WARNING !!!! DO NOT DISCLOSE ----------------------------
 EMAIL_HOST_USER = "apikey"
 EMAIL_HOST_PASSWORD = "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"
-
+ADMIN_EMAIL_AD = "thegadgetsmakers@gmail.com"
 # ----------------------SENSITIVE DATA !!! DO NOT DISCLOSE --------------------
 
 STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')

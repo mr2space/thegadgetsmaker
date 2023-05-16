@@ -16,7 +16,7 @@ import stripe
 
 #TODO: ADD USER RESTRICTIONS
 stripe.api_key = settings.STRIPE_SECRET_KEY
-ADMIN_EMAIL = "princegoswami.space@gmail.com"
+ADMIN_EMAIL = settings.ADMIN_EMAIL_AD
 
 def isVerified(user):
     if user:
