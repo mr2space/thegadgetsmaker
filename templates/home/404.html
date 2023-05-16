@@ -1,0 +1,22 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title %}
+   404 page not found !
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'purchase/upiwait.css' %}">
+{% endblock %}
+{% block root %}
+<div class="flex-wrapper">
+    <div class="w">
+        <div class="upi-title">
+           <h1>404</h1> <br />
+            Page Not found
+        </div>
+        <a href="/courses/">Explore More</a>
+    </div>
+
+</div>
+{% endblock %}

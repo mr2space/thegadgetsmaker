@@ -13,3 +13,7 @@ def index(request):
     blog = Blog.objects.all()[:4]
     param["blogs"] = blog
     return render(request, "home/home.html", param)
+
+def page_not_found_view(request, exception):
+    param = url.setPara(request, "")
+    return render(request, 'home/404.html',param, status=404)
