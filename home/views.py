@@ -14,6 +14,10 @@ def index(request):
     param["blogs"] = blog
     return render(request, "home/home.html", param)
 
+
+def cookie(request):
+    return render(request, "pol/cookie_pol.html")
+
 def page_not_found_view(request, exception):
     param = url.setPara(request, "")
     return render(request, 'home/404.html',param, status=404)
