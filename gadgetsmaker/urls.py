@@ -29,9 +29,11 @@ urlpatterns = [
     path('tinymce/', include('tinymce.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
+
+
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 
-handler404 = "home.views.page_not_found_view"
+handler404 = "django_404_project.views.page_not_found_view"
