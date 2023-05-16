@@ -35,7 +35,7 @@ body {
 .qr-box{
     width: 80%;
     max-width: 400px;
-    height: 400px;
+    height: auto;
     background: #ffff;
     border-radius: 10px;
 }
