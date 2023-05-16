@@ -3,7 +3,7 @@ from django.template.loader import get_template
 from django.conf import settings
 import threading
 
-ADMIN_EMAIL = "princegoswami.space@gmail.com"
+ADMIN_EMAIL = settings.ADMIN_EMAIL_AD
 
 
 class PurchaseEmailThread(threading.Thread):
