@@ -175,13 +175,13 @@ EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587
 # EMAIL_USE_TLS = True
 
-AWS_ACCESS_KEY_ID = 'AKIAVFQB2BC2NFF2YFUF'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY")
+AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
 AWS_SES_REGION_NAME = 'eu-north-1'
 AWS_SES_REGION_ENDPOINT = 'email.eu-north-1.amazonaws.com'
 # ----------- WARNING !!!! DO NOT DISCLOSE ----------------------------
 EMAIL_HOST_USER = "apikey"
-EMAIL_HOST_PASSWORD = "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"
+EMAIL_HOST_PASSWORD = env("EMAIL_PASSWORD")
 ADMIN_EMAIL_AD = "thegadgetsmakers@gmail.com"
 # ----------------------SENSITIVE DATA !!! DO NOT DISCLOSE --------------------
 
