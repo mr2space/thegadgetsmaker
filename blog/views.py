@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.shortcuts import redirect
 from django.shortcuts import render
 from .forms import BlogForm
 from home.templatetags import url
@@ -21,7 +22,7 @@ def addArtical(request):
     form = BlogForm(request.POST,request.FILES)
     if form.is_valid():
         form.save()
-        return HttpResponse("course created")
+        return redirect(f"/blog/{form.auto_id}")
     return HttpResponse("form not valid")
 
 

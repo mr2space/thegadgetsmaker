@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block tile %}
 500 Internal server Error
@@ -6,7 +7,7 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'error.css' %}">
-
+{% endblock %}
 {% block root %}
     <div class="container">
         <div class="status">500</div>

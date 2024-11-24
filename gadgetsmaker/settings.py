@@ -88,16 +88,28 @@ WSGI_APPLICATION = 'gadgetsmaker.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': env('DATABASE'),
+#         'USER': env('DATABASE_USER'),
+#         'PASSWORD': env('DATABASE_PASSWORD'),
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432'
+#     }
+# }
+
+# settings.py
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DATABASE'),
-        'USER': env('DATABASE_USER'),
-        'PASSWORD': env('DATABASE_PASSWORD'),
-        'HOST': '127.0.0.1',
-        'PORT': '5432'
+        'ENGINE': 'django.db.backends.sqlite3',  # Database engine for SQLite
+        'NAME': BASE_DIR / 'db.sqlite3',        # Path to the SQLite database file
     }
 }
+
+
+
 
 TINYMCE_DEFAULT_CONFIG = {
     "height": "320px",
@@ -170,19 +182,20 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-EMAIL_BACKEND = 'django_ses.SESBackend'
-EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False  # Keep this False if TLS is True
 
 AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY")
 AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
 AWS_SES_REGION_NAME = 'eu-north-1'
 AWS_SES_REGION_ENDPOINT = 'email.eu-north-1.amazonaws.com'
 # ----------- WARNING !!!! DO NOT DISCLOSE ----------------------------
-EMAIL_HOST_USER = "apikey"
+EMAIL_HOST_USER = "princegoswami.space@gmail.com"
 EMAIL_HOST_PASSWORD = env("EMAIL_PASSWORD")
-ADMIN_EMAIL_AD = "thegadgetsmakers@gmail.com"
+ADMIN_EMAIL_AD = "princegoswami.work@gmail.com"
 # ----------------------SENSITIVE DATA !!! DO NOT DISCLOSE --------------------
 
 STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')

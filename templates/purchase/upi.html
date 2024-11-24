@@ -19,7 +19,7 @@
         scan to pay and then upload the screenshot <br>
         our Admin will soon confirm your payment
     </div>
-    <form action="/payment/upi/{{courseId}}" method="post" enctype="multipart/form-data">
+    <form action="/payment/course/upi/{{courseId}}" method="post" enctype="multipart/form-data">
          {% csrf_token %}
         <div class="upload">
             <input type="file" id="file-input" name="upi_img" accept="image/*"  required />

@@ -70,7 +70,7 @@ def savingUserModel(request):
     except:
         email = User.objects.filter(email=request.POST.get('email')).values()
         if len(email) != 0:
-            return [-1, "eamil already registered "]
+            return [-1, "email already registered "]
         try:
             new_user = User.objects.create_user(
                 username=request.POST.get('username'),
